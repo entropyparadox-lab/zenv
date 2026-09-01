@@ -17,4 +17,5 @@ test {
     _ = meta;
     _ = parser;
     _ = loader;
+    _ = @import("edge_cases.zig");
 }

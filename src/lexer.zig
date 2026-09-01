@@ -43,11 +43,14 @@ pub const EnvIterator = struct {
 
             var raw_val = std.mem.trim(u8, clean_line[eq_idx + 1 ..], " \t");
 
-            // Strip quotes
-            if (raw_val.len >= 2 and ((raw_val[0] == '"' and raw_val[raw_val.len - 1] == '"') or
-                (raw_val[0] == '\'' and raw_val[raw_val.len - 1] == '\'')))
-            {
-                raw_val = raw_val[1 .. raw_val.len - 1];
+            // Strip quotes and inline comments
+            if (raw_val.len >= 2 and (raw_val[0] == '"' or raw_val[0] == '\'')) {
+                const q = raw_val[0];
+                if (std.mem.indexOfScalar(u8, raw_val[1..], q)) |close_idx| {
+                    raw_val = raw_val[1 .. close_idx + 1];
+                } else {
+                    raw_val = raw_val[1..];
+                }
             } else {
                 // For unquoted, strip trailing inline comments
                 if (std.mem.indexOfScalar(u8, raw_val, '#')) |comment_idx| {
