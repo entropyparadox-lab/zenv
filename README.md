@@ -1,11 +1,11 @@
 # zenv 🌿
 
-[![Zig Version](https://img.shields.io/badge/Zig-0.16.0%2B-orange.svg)](https://ziglang.org)
+[![Zig Version](https://img.shields.io/badge/Zig-0.17.0%2B-orange.svg)](https://ziglang.org)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Zero-Allocation](https://img.shields.io/badge/Zero--Allocation-Borrowed%20Slices-brightgreen.svg)]()
 [![Type-Safe](https://img.shields.io/badge/Comptime-Reflection-purple.svg)]()
 
-**Zero-Allocation `.env` Parser & Comptime Typed Config Injector for Zig (v0.16.0+)**
+**Zero-Allocation `.env` Parser & Comptime Typed Config Injector for Zig (v0.17.0+)**
 
 `zenv` brings ergonomic, type-safe `.env` configuration to pure Zig. By leveraging compile-time struct reflection (`@typeInfo`), `zenv` automatically parses `.env` files and binds values directly to native Zig struct fields with **zero heap allocations** and instant sub-microsecond performance.
 
@@ -30,7 +30,7 @@
   - Single `'...'` and double `"..."` quotes
   - Inline `# comments` and empty line skipping
   - Strict type conversions: integers (`u8`..`u128`, `i8`..`i128`), floats (`f32`, `f64`), booleans (`true`/`false`/`1`/`0`/`yes`/`no`), enums, strings, and optionals (`?T`).
-- 📦 **Pure Zig 0.16.0+**: Zero C dependencies, instant build times, fully cross-compilable.
+- 📦 **Pure Zig 0.17.0+**: Zero C dependencies, instant build times, fully cross-compilable.
 
 ---
 

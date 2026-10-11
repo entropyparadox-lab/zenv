@@ -25,22 +25,26 @@ pub fn parse(comptime T: type, env_str: []const u8) ParseError!T {
 
     var result: T = undefined;
 
-    inline for (info.@"struct".fields) |field| {
-        const custom_key: ?[]const u8 = if (@hasField(@TypeOf(mapping), field.name))
-            @field(mapping, field.name)
+    const struct_info = info.@"struct";
+    inline for (0..struct_info.field_names.len) |i| {
+        const field_name = struct_info.field_names[i];
+        const FieldType = struct_info.field_types[i];
+        const field_attr = struct_info.field_attrs[i];
+
+        const custom_key: ?[]const u8 = if (@hasField(@TypeOf(mapping), field_name))
+            @field(mapping, field_name)
         else
             null;
 
-        const maybe_val = findEnvValue(env_str, field.name, custom_key);
+        const maybe_val = findEnvValue(env_str, field_name, custom_key);
 
         if (maybe_val) |raw_val| {
-            @field(result, field.name) = try parseValue(field.type, raw_val);
+            @field(result, field_name) = try parseValue(FieldType, raw_val);
         } else {
-            if (field.default_value_ptr) |ptr| {
-                const typed_ptr: *const field.type = @ptrCast(@alignCast(ptr));
-                @field(result, field.name) = typed_ptr.*;
-            } else if (@typeInfo(field.type) == .optional) {
-                @field(result, field.name) = null;
+            if (field_attr.defaultValue(FieldType)) |default| {
+                @field(result, field_name) = default;
+            } else if (@typeInfo(FieldType) == .optional) {
+                @field(result, field_name) = null;
             } else {
                 return error.MissingRequiredEnvVar;
             }
@@ -93,10 +97,10 @@ fn parseValue(comptime FieldType: type, raw: []const u8) ParseError!FieldType {
             }
             return error.UnsupportedType;
         },
-        .@"enum" => {
-            inline for (@typeInfo(FieldType).@"enum".fields) |f| {
-                if (std.ascii.eqlIgnoreCase(f.name, raw)) {
-                    return @enumFromInt(f.value);
+        .@"enum" => |enum_info| {
+            inline for (0..enum_info.field_names.len) |i| {
+                if (std.ascii.eqlIgnoreCase(enum_info.field_names[i], raw)) {
+                    return @fromBackingInt(@intCast(@as(enum_info.tag_type, @intCast(enum_info.field_values[i]))));
                 }
             }
             return error.InvalidEnumValue;

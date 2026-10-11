@@ -6,9 +6,9 @@ Thank you for contributing to `zenv`! To maintain highest performance and code c
 
 ## 1. Compiler Versioning & Branch Strategy
 
-* **`main` (Protected)**: Targets **Official Stable Zig (`0.16.x`)**. All production releases (`vX.Y.Z`) are cut exclusively from `main`.
-* **`zig-master`**: Tracks upstream `ziglang/zig` nightly builds.
-* **`feat/<name>` / `fix/<name>`**: Branch off `main` for stable changes.
+* **`main` (Protected)**: Targets the Zig version declared by `minimum_zig_version` in `build.zig.zon`. All production releases (`vX.Y.Z`) are cut exclusively from `main`.
+* **Development snapshots**: Pin the full Zig version, including the commit suffix, in `build.zig.zon` and CI. Do not describe an unreleased version as stable.
+* **`feat/<name>` / `fix/<name>`**: Branch off `main` for focused changes.
 
 ---
 
