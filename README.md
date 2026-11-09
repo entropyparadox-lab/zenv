@@ -7,6 +7,8 @@
 
 **Zero-Allocation `.env` Parser & Comptime Typed Config Injector for Zig (v0.17.0+)**
 
+Tested with Zig **0.17.1**; minimum supported Zig version: **0.17.0**.
+
 `zenv` brings ergonomic, type-safe `.env` configuration to pure Zig. By leveraging compile-time struct reflection (`@typeInfo`), `zenv` automatically parses `.env` files and binds values directly to native Zig struct fields with **zero heap allocations** and instant sub-microsecond performance.
 
 ---
@@ -36,10 +38,11 @@
 
 ## Installation (`build.zig.zon`)
 
-Add `zenv` to your `build.zig.zon`:
+Add `zenv` to your `build.zig.zon` using the **development `main` archive**
+(not a versioned release; its contents change as `main` advances):
 
 ```bash
-zig fetch --save https://github.com/entropyparadox-lab/zenv/archive/refs/tags/v1.0.0.tar.gz
+zig fetch --save https://github.com/entropyparadox-lab/zenv/archive/refs/heads/main.tar.gz
 ```
 
 In your `build.zig`:
