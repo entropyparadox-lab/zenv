@@ -15,7 +15,7 @@ jobs:
     name: Code Style & Lint
     runs-on: ubuntu-latest
     env:
-      ZIG_VERSION: 0.17.0
+      ZIG_VERSION: 0.17.1
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -45,7 +45,7 @@ jobs:
     needs: lint-and-format
     runs-on: ${{ matrix.os }}
     env:
-      ZIG_VERSION: 0.17.0-dev.2085+5e36170b5
+      ZIG_VERSION: 0.17.1
     strategy:
       fail-fast: false
       matrix:
